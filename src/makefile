@@ -1,5 +1,5 @@
 SRC = $(shell ls *.cc)
-DIR = /tmp/out
+DIR = $(HOME)/usaco_out
 OUT = $(addprefix $(DIR)/, $(SRC:.cc=.out))
 EXE = $(addprefix $(DIR)/, $(SRC:.cc=.exe))
 
