@@ -1,7 +1,7 @@
 /*
 ID: guofeng2
 TASK: milk2
-LANG: C++
+LANG: C++11
 */
 
 #include <fstream>
@@ -17,7 +17,7 @@ struct Bracket{
 
     Bracket(int a, int b) : first(a), second(b) {}
     Bracket(const Bracket & a) : first(a.first), second(a.second) {}
-    Bracket & operator=(const Bracket & b) { first=b.first; second=b.second; }
+    Bracket & operator=(const Bracket & b) { first=b.first; second=b.second; return *this;}
 
     bool operator<(const Bracket & a) const { return first < a.first; }
 };
@@ -27,7 +27,11 @@ ostream & operator<<(ostream & o, const Bracket & b)
     return o<<"("<<b.first<<","<<b.second<<")"<<endl; 
 }
 
-typedef vector<Bracket> Vec;
+struct max_num{
+    int num;
+    max_num():num(0){}
+    void update(int n) { if (n > num) num    = n; } 
+};
 
 int main()
 {
@@ -46,46 +50,36 @@ int main()
 
     sort(all.begin(), all.end());
 
-    int max_gap     = 0;
-    int max_non_gap = 0;
+    max_num max_gap, max_non_gap;
 
     if (!all.empty())
     {
         Bracket current = all.front();
-        Vec::iterator p = all.begin();
+        auto p = all.begin();
        
         while(p!=all.end())
         {
             p++;
 
             if (p==all.end())
-            {
-                int non_gap = current.second - current.first;
-                if ( non_gap > max_non_gap ) max_non_gap = non_gap;
-            }
-            else if (p->second <= current.second) 
+                max_non_gap.update(current.second - current.first);
+            else if (p->second <= current.second);
                 //*p is contained in current, do nothing
-                continue;
-            else if (p->first<=current.second) 
+            else if (p->first  <= current.second)   
                 //*p overlaps with current, expand current
-            {
                 current.second    = p->second;
-                continue;
-            }
             else
             {
-                int non_gap = current.second - current.first;
-                if ( non_gap > max_non_gap ) max_non_gap = non_gap;
-
-                int gap     = p->first - current.second;
-                if (gap > max_gap) max_gap = gap;
+                max_non_gap.update(current.second - current.first);
+                max_gap.update(p->first - current.second);
 
                 current = *p;
             }
         }
     }
 
-    out<<max_non_gap<<' '<<max_gap<<endl;
+    out<<max_non_gap.num<<' '<<max_gap.num<<endl;
 
     return 0;
 }
+

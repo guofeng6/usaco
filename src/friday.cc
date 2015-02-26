@@ -63,7 +63,7 @@ int main()
         }
     }
 
-    count[d%7]--;
+    count[d%7] --;
 
     for(int i=0; i<6; ++i)
         out<<count[(i+6)%7]<<' ';

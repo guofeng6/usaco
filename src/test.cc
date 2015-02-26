@@ -1,7 +1,7 @@
 /*
 ID: guofeng2
 TASK: test
-LANG: C++
+LANG: C++11
 */
 
 #include <fstream>

@@ -7,13 +7,12 @@
 using namespace std;
 
 struct Point {
-    int x;
-    int y;
+    int x, y;
     Point(int a, int b):x(a), y(b) {}
-    Point operator+(const Point & p) { return Point(x+p.x,  y+p.y); }
-    Point operator-(const Point & p) { return Point(x-p.x,  y-p.y); }
-    bool operator==(const Point & p) { return x==p.x && y == p.y; }
-    Point & operator=(const Point & p) { x=p.x; y = p.y; return *this;}
+    Point operator+(const Point & p)  const { return Point(x+p.x,  y+p.y); }
+    Point operator-(const Point & p)  const { return Point(x-p.x,  y-p.y); }
+    bool  operator==(const Point & p) const { return x==p.x && y == p.y; }
+    Point & operator=(const Point & p){ x=p.x; y = p.y; return *this;}
 };
 
 ostream & operator<<(ostream & o, const Point & p) 
@@ -37,18 +36,16 @@ int main()
     vector<Point> all;
 
     int N; in>>N;
-    int a, b;
-    in>>a>>b; all.push_back(Point(a, b));
-    in>>a>>b; all.push_back(Point(a, b));
+    all.push_back(Point(0, 0));
+    all.push_back(Point(1, 0));
 
-    for(int i=2; i<N+1; ++i) 
+    for(int i=2; i<N+1; ++i)
     {
-        Point p     = all[i-1]-all[i-2];
-        Point l     = get_left(p);
-        Point next  = all[i-1] + l;
+        Point delta = all[i-1] - all[i-2];
+        Point next  = all[i-1] + get_left(delta);
 
         if(find(all.begin(), all.end(), next) != all.end())
-            next    = all[i-1]+p; 
+            next    = all[i-1] + delta; 
 
         all.push_back(next);
     }

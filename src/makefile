@@ -7,13 +7,13 @@ all: $(DIR) $(OUT)
 exe: $(EXE)
 
 $(DIR)/%.out:%.in $(DIR)/%.exe
-	$(@:.out=.exe)
+	time $(@:.out=.exe)
 	@mv  $(<:.in=.out) $(DIR) 
 	@cat $< && echo "===>"
 	@cat $@ && echo ""
 
 $(DIR)/%.exe:%.cc
-	g++ $< -o $@ 
+	g++ -std=gnu++0x $< -o $@ 
 
 $(DIR):
 	install -d $(DIR) 
