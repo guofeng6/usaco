@@ -7,9 +7,11 @@ all: $(DIR) $(OUT)
 exe: $(EXE)
 
 $(DIR)/%.out:%.in $(DIR)/%.exe
-	time $(@:.out=.exe)
+	@if [ -f $@ ]; then rm $@; fi
+	@time $(@:.out=.exe) 2>&1
 	@mv  $(<:.in=.out) $(DIR) 
-	@cat $< && echo "===>"
+	@cat $< | head -50 && echo "..."
+	@echo "==>"
 	@cat $@ && echo ""
 
 $(DIR)/%.exe:%.cc

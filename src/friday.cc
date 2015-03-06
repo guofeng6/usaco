@@ -52,23 +52,21 @@ int main()
     for(int i=0; i<7; ++i) count[i] = 0;
 
     int d = 13;
-    count[d%7] ++;
+    ++count[d%7];
 
     for(int y=0; y<N; ++y)
     {
         for (int m = 0; m < 12; ++m)
         {
             d += days_for_month_of_year(m, y+1900);
-            count[d%7] ++;
+            ++count[d%7];
         }
     }
 
-    count[d%7] --;
+    --count[d%7];
 
     for(int i=0; i<6; ++i)
         out<<count[(i+6)%7]<<' ';
 
     out<<count[(6+6)%7]<<endl;
-
-    return 0;
 }

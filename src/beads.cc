@@ -61,6 +61,4 @@ int main()
 
     ifstream("beads.in") >>N>>b;
     ofstream("beads.out")<<Necklace(b).max_collectable();
-
-    return 0;
 }

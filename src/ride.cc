@@ -9,18 +9,11 @@ LANG: C++
 
 using namespace std;
 
-int get_code(istream & in)
+int get_code(const string & s)
 {
-    char  c;
     int   n = 1;
-    while(in)
-    {
-        c = in.get();
-        if (c=='\n' || c== EOF)
-            break;
-        n = (n*(c-'A' + 1)) % 47;
-    }
-
+    for(int i=0; i<s.size(); ++i)
+        n   = (n*(s[i]-'A' + 1)) % 47;
     return n;
 }
 
@@ -29,13 +22,10 @@ int main()
     ifstream in("ride.in");
     ofstream out("ride.out");
 
-    int a   = get_code(in); 
-    int b   = get_code(in); 
+    string a, b; in>>a>>b;
 
-    if (a==b)
+    if(get_code(a) == get_code(b))
         out<<"GO"<<endl;
     else
         out<<"STAY"<<endl;
-
-    return 0;
 }

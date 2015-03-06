@@ -59,7 +59,7 @@ int main()
        
         while(p!=all.end())
         {
-            p++;
+            ++p;
 
             if (p==all.end())
                 max_non_gap.update(current.second - current.first);
@@ -79,7 +79,5 @@ int main()
     }
 
     out<<max_non_gap.num<<' '<<max_gap.num<<endl;
-
-    return 0;
 }
 
